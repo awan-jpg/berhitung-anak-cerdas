@@ -1,48 +1,36 @@
-'use client'
+'use client';
 
 export default function Home() {
   return (
-    <main style={{
-      minHeight: '100vh',
-      backgroundColor: '#FFF8E1',
-      padding: '24px',
+    <main style={{ 
+      minHeight: '100vh', 
+      backgroundColor: '#fff8e1',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
       fontFamily: 'sans-serif'
     }}>
-      <h1 style={{ textAlign: 'center', color: '#FF6F00', fontSize: '28px' }}>
+      <h1 style={{ fontSize: '2.5rem', color: '#ff6f00', marginBottom: '3rem' }}>
         ⭐ BELAJAR BERHITUNG ⭐
       </h1>
-      <p style={{ textAlign: 'center', fontSize: '16px', color: '#444', marginTop: '8px' }}>
-        Bersama Cerdas Anak Indonesia 🇮🇩
-      </p>
-      <div style={{ marginTop: '32px', maxWidth: '400px', marginLeft: 'auto', marginRight: 'auto' }}>
-        <button style={{
-          width: '100%', padding: '16px', fontSize: '18px',
-          backgroundColor: '#4CAF50', color: 'white',
-          border: 'none', borderRadius: '12px', marginBottom: '12px',
-          cursor: 'pointer'
-        }}>🍎 Tambah</button>
-
-        <button style={{
-          width: '100%', padding: '16px', fontSize: '18px',
-          backgroundColor: '#2196F3', color: 'white',
-          border: 'none', borderRadius: '12px', marginBottom: '12px',
-          cursor: 'pointer'
-        }}>🫐 Kurang</button>
-
-        <button style={{
-          width: '100%', padding: '16px', fontSize: '18px',
-          backgroundColor: '#FF9800', color: 'white',
-          border: 'none', borderRadius: '12px', marginBottom: '12px',
-          cursor: 'pointer'
-        }}>✖️ Kali</button>
-
-        <button style={{
-          width: '100%', padding: '16px', fontSize: '18px',
-          backgroundColor: '#9C27B0', color: 'white',
-          border: 'none', borderRadius: '12px',
-          cursor: 'pointer'
-        }}>➗ Bagi</button>
+      
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem' }}>
+        <button style={{ padding: '2rem 3rem', fontSize: '1.5rem', backgroundColor: '#4caf50', color: 'white', border: 'none', borderRadius: '1rem' }}>
+          ➕ TAMBAH
+        </button>
+        <button style={{ padding: '2rem 3rem', fontSize: '1.5rem', backgroundColor: '#2196f3', color: 'white', border: 'none', borderRadius: '1rem' }}>
+          ➖ KURANG
+        </button>
+        <button style={{ padding: '2rem 3rem', fontSize: '1.5rem', backgroundColor: '#ff9800', color: 'white', border: 'none', borderRadius: '1rem' }}>
+          ✖️ KALI
+        </button>
+        <button style={{ padding: '2rem 3rem', fontSize: '1.5rem', backgroundColor: '#e91e63', color: 'white', border: 'none', borderRadius: '1rem' }}>
+          ➗ BAGI
+        </button>
       </div>
+      
+      <p style={{ marginTop: '3rem', color: '#666' }}>Cerdas Anak Indonesia 🧡</p>
     </main>
-  )
+  );
 }
