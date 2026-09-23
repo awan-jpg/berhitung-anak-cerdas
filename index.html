@@ -26,60 +26,92 @@
     .kotak-menu h2{font-size:18px;color:#333;margin-bottom:6px}
     .kotak-menu p{font-size:13px;color:#757575;margin-bottom:12px}
     .bintang-poin{font-size:14px;font-weight:bold;color:#FF8F00}
+    
+    /* Halaman Latihan */
+    .halaman-latihan{display:none}
+    .halaman-latihan.aktif{display:block}
+    .tombol-kembali{background:#eee;border:none;padding:10px 16px;border-radius:10px;cursor:pointer;margin-bottom:20px;font-size:15px}
+    .soal-kotak{background:white;border-radius:20px;padding:30px 20px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+    .gambar-benda{font-size:50px;margin:20px 0;line-height:1.2}
+    .pilihan-angka{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:25px}
+    .btn-angka{background:#E3F2FD;border:none;border-radius:12px;padding:12px 8px;font-size:20px;cursor:pointer;font-weight:bold;color:#1976D2}
+    .btn-angka:active{transform:scale(.95);background:#BBDEFB}
+    .pesan{margin-top:20px;font-size:22px;font-weight:bold}
+    .benar{color:#4CAF50}
+    .salah{color:#F44336}
   </style>
 </head>
 <body>
 
 <div class="wadah">
-  <h1 class="judul-utama">Mau Belajar Apa? 🎈</h1>
-  <div class="grid-menu">
+  <!-- Halaman Menu Utama -->
+  <div id="halaman-menu" class="halaman-latihan aktif">
+    <h1 class="judul-utama">Mau Belajar Apa? 🎈</h1>
+    <div class="grid-menu">
 
-    <div class="kotak-menu" onclick="bukaMenu('hitung')">
-      <div class="ikon-besar">🔢</div>
-      <h2>Hitung Jumlah</h2>
-      <p>Hitung benda & pilih angka</p>
-      <div class="bintang-poin">⭐ <span id="poin-hitung">0</span></div>
+      <div class="kotak-menu" onclick="bukaMenu('hitung')">
+        <div class="ikon-besar">🔢</div>
+        <h2>Hitung Jumlah</h2>
+        <p>Hitung benda & pilih angka</p>
+        <div class="bintang-poin">⭐ <span id="poin-hitung">0</span></div>
+      </div>
+
+      <div class="kotak-menu" onclick="bukaMenu('tambah')">
+        <div class="ikon-besar">➕</div>
+        <h2>Penjumlahan</h2>
+        <p>Jumlahkan angka sederhana</p>
+        <div class="bintang-poin">⭐ <span id="poin-tambah">0</span></div>
+      </div>
+
+      <div class="kotak-menu" onclick="bukaMenu('kurang')">
+        <div class="ikon-besar">➖</div>
+        <h2>Pengurangan</h2>
+        <p>Kurangkan angka sederhana</p>
+        <div class="bintang-poin">⭐ <span id="poin-kurang">0</span></div>
+      </div>
+
+      <div class="kotak-menu" onclick="bukaMenu('angka')">
+        <div class="ikon-besar">🔟</div>
+        <h2>Kenal Angka</h2>
+        <p>Angka 1 sampai 10</p>
+        <div class="bintang-poin">⭐ <span id="poin-angka">0</span></div>
+      </div>
+
+      <div class="kotak-menu" onclick="bukaMenu('kali')">
+        <div class="ikon-besar">✖️</div>
+        <h2>Perkalian</h2>
+        <p>Lipatkan angka</p>
+        <div class="bintang-poin">⭐ <span id="poin-kali">0</span></div>
+      </div>
+
+      <div class="kotak-menu" onclick="bukaMenu('bagi')">
+        <div class="ikon-besar">➗</div>
+        <h2>Pembagian</h2>
+        <p>Bagikan sama rata</p>
+        <div class="bintang-poin">⭐ <span id="poin-bagi">0</span></div>
+      </div>
+
     </div>
-
-    <div class="kotak-menu" onclick="bukaMenu('tambah')">
-      <div class="ikon-besar">➕</div>
-      <h2>Penjumlahan</h2>
-      <p>Jumlahkan angka sederhana</p>
-      <div class="bintang-poin">⭐ <span id="poin-tambah">0</span></div>
-    </div>
-
-    <div class="kotak-menu" onclick="bukaMenu('kurang')">
-      <div class="ikon-besar">➖</div>
-      <h2>Pengurangan</h2>
-      <p>Kurangkan angka sederhana</p>
-      <div class="bintang-poin">⭐ <span id="poin-kurang">0</span></div>
-    </div>
-
-    <div class="kotak-menu" onclick="bukaMenu('angka')">
-      <div class="ikon-besar">🔟</div>
-      <h2>Kenal Angka</h2>
-      <p>Angka 1 sampai 10</p>
-      <div class="bintang-poin">⭐ <span id="poin-angka">0</span></div>
-    </div>
-
-    <div class="kotak-menu" onclick="bukaMenu('kali')">
-      <div class="ikon-besar">✖️</div>
-      <h2>Perkalian</h2>
-      <p>Lipatkan angka</p>
-      <div class="bintang-poin">⭐ <span id="poin-kali">0</span></div>
-    </div>
-
-    <div class="kotak-menu" onclick="bukaMenu('bagi')">
-      <div class="ikon-besar">➗</div>
-      <h2>Pembagian</h2>
-      <p>Bagikan sama rata</p>
-      <div class="bintang-poin">⭐ <span id="poin-bagi">0</span></div>
-    </div>
-
   </div>
+
+  <!-- Halaman Hitung Jumlah -->
+  <div id="halaman-hitung" class="halaman-latihan">
+    <button class="tombol-kembali" onclick="kembaliKeMenu()">← Kembali</button>
+    <div class="soal-kotak">
+      <h2 id="teks-soal">Ada berapa apel?</h2>
+      <div id="gambar-benda" class="gambar-benda">🍎 🍎 🍎</div>
+      <p>Pilih jawabannya ya!</p>
+      <div class="pilihan-angka" id="pilihan-angka">
+        <!-- Pilihan muncul otomatis -->
+      </div>
+      <div id="pesan" class="pesan"></div>
+    </div>
+  </div>
+
 </div>
 
 <script>
+// Simpan poin
 let poin = {
   hitung: parseInt(localStorage.getItem('poinHitung')||0),
   tambah: parseInt(localStorage.getItem('poinTambah')||0),
@@ -89,18 +121,88 @@ let poin = {
   bagi: parseInt(localStorage.getItem('poinBagi')||0)
 };
 
-document.getElementById('poin-hitung').textContent = poin.hitung;
-document.getElementById('poin-tambah').textContent = poin.tambah;
-document.getElementById('poin-kurang').textContent = poin.kurang;
-document.getElementById('poin-angka').textContent = poin.angka;
-document.getElementById('poin-kali').textContent = poin.kali;
-document.getElementById('poin-bagi').textContent = poin.bagi;
+// Tampilkan poin
+function tampilkanPoin(){
+  document.getElementById('poin-hitung').textContent = poin.hitung;
+  document.getElementById('poin-tambah').textContent = poin.tambah;
+  document.getElementById('poin-kurang').textContent = poin.kurang;
+  document.getElementById('poin-angka').textContent = poin.angka;
+  document.getElementById('poin-kali').textContent = poin.kali;
+  document.getElementById('poin-bagi').textContent = poin.bagi;
+}
+tampilkanPoin();
 
+// Data soal hitung
+const daftarSoal = [
+  {teks:'Ada berapa apel?', benda:'🍎', jumlah:3},
+  {teks:'Ada berapa jeruk?', benda:'🍊', jumlah:5},
+  {teks:'Ada berapa pisang?', benda:'🍌', jumlah:2},
+  {teks:'Ada berapa bintang?', benda:'⭐', jumlah:4},
+  {teks:'Ada berapa balon?', benda:'🎈', jumlah:1},
+  {teks:'Ada berapa apel?', benda:'🍎', jumlah:6},
+  {teks:'Ada berapa hati?', benda:'❤️', jumlah:7},
+  {teks:'Ada berapa bunga?', benda:'🌸', jumlah:8},
+  {teks:'Ada berapa matahari?', benda:'☀️', jumlah:9},
+  {teks:'Ada berapa bulan?', benda:'🌙', jumlah:10}
+];
+
+let soalSaatIni = null;
+
+// Buka menu
 function bukaMenu(nama){
+  document.querySelectorAll('.halaman-latihan').forEach(h=>h.classList.remove('aktif'));
+  
   if(nama==='hitung'){
-    alert('Siap! 🎉 Bagian Hitung Jumlah akan kita isi selanjutnya!');
+    document.getElementById('halaman-hitung').classList.add('aktif');
+    buatSoalHitung();
   }else{
-    alert(nama==='kali'?'Perkalian':'Pembagian'==nama?'Pembagian':nama==='tambah'?'Penjumlahan':nama==='kurang'?'Pengurangan':'Kenal Angka' + ' sedang disiapkan ya 🚧');
+    alert(nama==='kali'?'Perkalian':'Pembagian'===nama?'Pembagian':nama==='tambah'?'Penjumlahan':nama==='kurang'?'Pengurangan':'Kenal Angka' + ' sedang disiapkan ya 🚧');
+    document.getElementById('halaman-menu').classList.add('aktif');
+  }
+}
+
+// Kembali ke menu
+function kembaliKeMenu(){
+  document.querySelectorAll('.halaman-latihan').forEach(h=>h.classList.remove('aktif'));
+  document.getElementById('halaman-menu').classList.add('aktif');
+  tampilkanPoin();
+}
+
+// Buat soal baru
+function buatSoalHitung(){
+  soalSaatIni = daftarSoal[Math.floor(Math.random()*daftarSoal.length)];
+  
+  document.getElementById('teks-soal').textContent = soalSaatIni.teks;
+  document.getElementById('gambar-benda').innerHTML = Array(soalSaatIni.jumlah).fill(soalSaatIni.benda).join(' ');
+  document.getElementById('pesan').textContent = '';
+  
+  // Buat pilihan angka
+  let pilihan = [soalSaatIni.jumlah];
+  while(pilihan.length < 5){
+    let acak = Math.floor(Math.random()*10)+1;
+    if(!pilihan.includes(acak)) pilihan.push(acak);
+  }
+  pilihan.sort(()=>Math.random()-0.5);
+  
+  let html = '';
+  pilihan.forEach(n=>{
+    html += <button class="btn-angka" onclick="cekJawaban(${n})">${n}</button>;
+  });
+  document.getElementById('pilihan-angka').innerHTML = html;
+}
+
+// Cek jawaban
+function cekJawaban(angkaDipilih){
+  const pesan = document.getElementById('pesan');
+  if(angkaDipilih === soalSaatIni.jumlah){
+    pesan.textContent = 'HEBAT! 🎉 Benar sekali!';
+    pesan.className = 'pesan benar';
+    poin.hitung++;
+    localStorage.setItem('poinHitung', poin.hitung);
+    setTimeout(buatSoalHitung, 1500);
+  }else{
+    pesan.textContent = 'Coba lagi ya 💪';
+    pesan.className = 'pesan salah';
   }
 }
 </script>
