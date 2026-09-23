@@ -26,11 +26,8 @@
 <body>
 
 <div class="wadah">
-
-  <!-- HALAMAN MENU -->
   <div id="menu" class="halaman aktif">
     <h1>Mau Belajar Apa? 🎈</h1>
-    
     <div class="kotak" onclick="bukaHitung()">
       <div style="font-size:40px">🔢</div>
       <h2>Hitung Jumlah</h2>
@@ -39,7 +36,6 @@
     </div>
   </div>
 
-  <!-- HALAMAN HITUNG -->
   <div id="halamanHitung" class="halaman">
     <button class="kembali" onclick="kembali()">← Kembali</button>
     <div class="soal">
@@ -50,15 +46,12 @@
       <div id="pesan" class="pesan"></div>
     </div>
   </div>
-
 </div>
 
 <script>
-// Simpan bintang
 let bintang = parseInt(localStorage.getItem('bintangSimpan') || 0);
 document.getElementById('bintang').textContent = bintang;
 
-// Soal-soal
 const daftar = [
   {tanya:'Ada berapa apel?', ikon:'🍎', jawab:3},
   {tanya:'Ada berapa jeruk?', ikon:'🍊', jawab:5},
@@ -69,29 +62,24 @@ const daftar = [
 
 let soalSekarang = null;
 
-// Buka halaman hitung
 function bukaHitung(){
   document.getElementById('menu').classList.remove('aktif');
   document.getElementById('halamanHitung').classList.add('aktif');
   buatSoal();
 }
 
-// Kembali ke menu
 function kembali(){
   document.getElementById('halamanHitung').classList.remove('aktif');
   document.getElementById('menu').classList.add('aktif');
   document.getElementById('bintang').textContent = bintang;
 }
 
-// Buat soal baru
 function buatSoal(){
   soalSekarang = daftar[Math.floor(Math.random() * daftar.length)];
-  
   document.getElementById('pertanyaan').textContent = soalSekarang.tanya;
   document.getElementById('gambar').innerHTML = Array(soalSekarang.jawab).fill(soalSekarang.ikon).join(' ');
   document.getElementById('pesan').textContent = '';
   
-  // Buat pilihan angka
   let pilihan = [soalSekarang.jawab];
   while(pilihan.length < 5){
     let acak = Math.floor(Math.random()*5)+1;
@@ -106,7 +94,6 @@ function buatSoal(){
   document.getElementById('pilihan').innerHTML = tombol;
 }
 
-// Cek jawaban
 function cek(angkaDipilih){
   if(angkaDipilih === soalSekarang.jawab){
     document.getElementById('pesan').textContent = 'HEBAT! 🎉 Benar!';
