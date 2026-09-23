@@ -5,108 +5,108 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Belajar Berhitung</title>
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
-    body{background:#FFF8E1;padding:20px}
-    .wadah{max-width:400px;margin:0 auto}
-    h1{text-align:center;color:#5D4037;margin:20px 0}
-    .kotak{background:white;border-radius:16px;padding:30px;margin:15px 0;text-align:center;cursor:pointer;border-top:6px solid #FFC107;box-shadow:0 3px 8px rgba(0,0,0,0.1)}
-    .kotak:active{transform:scale(0.98)}
-    .halaman{display:none}
-    .aktif{display:block}
-    .kembali{background:#eee;border:none;padding:10px 20px;border-radius:8px;font-size:16px;cursor:pointer;margin-bottom:20px}
-    .soal{background:white;border-radius:16px;padding:30px;text-align:center}
-    .gambar{font-size:40px;margin:20px 0}
-    .pilihan{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:20px}
-    .btn{background:#E3F2FD;border:none;border-radius:8px;padding:12px;font-size:20px;font-weight:bold;cursor:pointer;color:#1976D2}
-    .pesan{margin-top:20px;font-size:22px;font-weight:bold}
-    .benar{color:green}
-    .salah{color:red}
+    *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
+    body{background:#FFF8E1;padding:20px;}
+    .wadah{max-width:400px;margin:0 auto;}
+    h1{text-align:center;color:#5D4037;margin:20px 0;}
+    .kotak{background:white;border-radius:16px;padding:30px;margin:15px 0;text-align:center;cursor:pointer;border-top:6px solid #FFC107;box-shadow:0 3px 8px rgba(0,0,0,0.1);}
+    .kotak:active{transform:scale(0.98);}
+    .halaman{display:none;}
+    .aktif{display:block;}
+    .kembali{background:#eee;border:none;padding:10px 20px;border-radius:8px;font-size:16px;cursor:pointer;margin-bottom:20px;}
+    .soal{background:white;border-radius:16px;padding:30px;text-align:center;}
+    .gambar{font-size:48px;margin:20px 0;}
+    .pilihan{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:20px;}
+    .btn{background:#E3F2FD;border:none;border-radius:8px;padding:12px;font-size:20px;font-weight:bold;cursor:pointer;color:#1976D2;}
+    .pesan{margin-top:20px;font-size:22px;font-weight:bold;}
+    .benar{color:green;}
+    .salah{color:red;}
   </style>
 </head>
 <body>
+  <div class="wadah">
+    <!-- MENU UTAMA -->
+    <div id="menu" class="halaman aktif">
+      <h1>Mau Belajar Apa? 🎈</h1>
+      <div class="kotak" onclick="bukaHitung()">
+        <div style="font-size:40px;">🔢</div>
+        <h2>Hitung Jumlah</h2>
+        <p>Hitung benda & pilih angka</p>
+        <p>⭐ <span id="bintang">0</span></p>
+      </div>
+    </div>
 
-<div class="wadah">
-  <div id="menu" class="halaman aktif">
-    <h1>Mau Belajar Apa? 🎈</h1>
-    <div class="kotak" onclick="bukaHitung()">
-      <div style="font-size:40px">🔢</div>
-      <h2>Hitung Jumlah</h2>
-      <p>Hitung benda & pilih angka</p>
-      <p>⭐ <span id="bintang">0</span></p>
+    <!-- HALAMAN HITUNG -->
+    <div id="halamanHitung" class="halaman">
+      <button class="kembali" onclick="kembali()">← Kembali</button>
+      <div class="soal">
+        <h2 id="pertanyaan">Ada berapa apel?</h2>
+        <div id="gambar" class="gambar">🍎🍎🍎</div>
+        <p>Pilih jawaban:</p>
+        <div id="pilihan" class="pilihan"></div>
+        <div id="pesan" class="pesan"></div>
+      </div>
     </div>
   </div>
 
-  <div id="halamanHitung" class="halaman">
-    <button class="kembali" onclick="kembali()">← Kembali</button>
-    <div class="soal">
-      <h2 id="pertanyaan">Ada berapa apel?</h2>
-      <div id="gambar" class="gambar">🍎 🍎 🍎</div>
-      <p>Pilih jawaban:</p>
-      <div class="pilihan" id="pilihan"></div>
-      <div id="pesan" class="pesan"></div>
-    </div>
-  </div>
-</div>
+  <script>
+    let bintang = parseInt(localStorage.getItem('bintangSimpan')) || 0;
+    document.getElementById('bintang').textContent = bintang;
 
-<script>
-let bintang = parseInt(localStorage.getItem('bintangSimpan') || 0);
-document.getElementById('bintang').textContent = bintang;
+    const daftar = [
+      {tanya:'Ada berapa apel?', ikon:'🍎', jumlah:3},
+      {tanya:'Ada berapa jeruk?', ikon:'🍊', jumlah:5},
+      {tanya:'Ada berapa pisang?', ikon:'🍌', jumlah:2},
+      {tanya:'Ada berapa bintang?', ikon:'⭐', jumlah:4},
+      {tanya:'Ada berapa balon?', ikon:'🎈', jumlah:1}
+    ];
 
-const daftar = [
-  {tanya:'Ada berapa apel?', ikon:'🍎', jawab:3},
-  {tanya:'Ada berapa jeruk?', ikon:'🍊', jawab:5},
-  {tanya:'Ada berapa pisang?', ikon:'🍌', jawab:2},
-  {tanya:'Ada berapa bintang?', ikon:'⭐', jawab:4},
-  {tanya:'Ada berapa balon?', ikon:'🎈', jawab:1}
-];
+    let soalSekarang = null;
 
-let soalSekarang = null;
+    function bukaHitung(){
+      document.getElementById('menu').classList.remove('aktif');
+      document.getElementById('halamanHitung').classList.add('aktif');
+      buatSoal();
+    }
 
-function bukaHitung(){
-  document.getElementById('menu').classList.remove('aktif');
-  document.getElementById('halamanHitung').classList.add('aktif');
-  buatSoal();
-}
+    function kembali(){
+      document.getElementById('halamanHitung').classList.remove('aktif');
+      document.getElementById('menu').classList.add('aktif');
+      document.getElementById('bintang').textContent = bintang;
+    }
 
-function kembali(){
-  document.getElementById('halamanHitung').classList.remove('aktif');
-  document.getElementById('menu').classList.add('aktif');
-  document.getElementById('bintang').textContent = bintang;
-}
+    function buatSoal(){
+      soalSekarang = daftar[Math.floor(Math.random() * daftar.length)];
+      document.getElementById('pertanyaan').textContent = soalSekarang.tanya;
+      document.getElementById('gambar').innerHTML = Array(soalSekarang.jumlah).fill(soalSekarang.ikon).join(' ');
+      document.getElementById('pesan').textContent = '';
 
-function buatSoal(){
-  soalSekarang = daftar[Math.floor(Math.random() * daftar.length)];
-  document.getElementById('pertanyaan').textContent = soalSekarang.tanya;
-  document.getElementById('gambar').innerHTML = Array(soalSekarang.jawab).fill(soalSekarang.ikon).join(' ');
-  document.getElementById('pesan').textContent = '';
-  
-  let pilihan = [soalSekarang.jawab];
-  while(pilihan.length < 5){
-    let acak = Math.floor(Math.random()*5)+1;
-    if(!pilihan.includes(acak)) pilihan.push(acak);
-  }
-  pilihan.sort(() => Math.random() - 0.5);
-  
-  let tombol = '';
-  pilihan.forEach(angka => {
-    tombol += <button class="btn" onclick="cek(${angka})">${angka}</button>;
-  });
-  document.getElementById('pilihan').innerHTML = tombol;
-}
+      let pilihan = [soalSekarang.jumlah];
+      while(pilihan.length < 5){
+        let acak = Math.floor(Math.random()*5)+1;
+        if(!pilihan.includes(acak)) pilihan.push(acak);
+      }
+      pilihan.sort(() => Math.random() - 0.5);
 
-function cek(angkaDipilih){
-  if(angkaDipilih === soalSekarang.jawab){
-    document.getElementById('pesan').textContent = 'HEBAT! 🎉 Benar!';
-    document.getElementById('pesan').className = 'pesan benar';
-    bintang++;
-    localStorage.setItem('bintangSimpan', bintang);
-    setTimeout(buatSoal, 1500);
-  }else{
-    document.getElementById('pesan').textContent = 'Coba lagi ya 💪';
-    document.getElementById('pesan').className = 'pesan salah';
-  }
-}
-</script>
+      let tombol = '';
+      pilihan.forEach(angka => {
+        tombol += <button class="btn" onclick="cek(${angka})">${angka}</button>;
+      });
+      document.getElementById('pilihan').innerHTML = tombol;
+    }
 
+    function cek(angkaDipilih){
+      if(angkaDipilih === soalSekarang.jumlah){
+        document.getElementById('pesan').textContent = 'HEBAT! 🎉 Benar!';
+        document.getElementById('pesan').className = 'pesan benar';
+        bintang++;
+        localStorage.setItem('bintangSimpan', bintang);
+        setTimeout(buatSoal, 1500);
+      }else{
+        document.getElementById('pesan').textContent = 'Coba lagi ya 💪';
+        document.getElementById('pesan').className = 'pesan salah';
+      }
+    }
+  </script>
 </body>
-</html> 
+</html>
