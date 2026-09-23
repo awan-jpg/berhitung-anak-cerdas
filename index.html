@@ -27,12 +27,11 @@
     .kotak-menu p{font-size:13px;color:#757575;margin-bottom:12px}
     .bintang-poin{font-size:14px;font-weight:bold;color:#FF8F00}
     
-    /* Halaman Latihan */
     .halaman-latihan{display:none}
     .halaman-latihan.aktif{display:block}
     .tombol-kembali{background:#eee;border:none;padding:10px 16px;border-radius:10px;cursor:pointer;margin-bottom:20px;font-size:15px}
     .soal-kotak{background:white;border-radius:20px;padding:30px 20px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.08)}
-    .gambar-benda{font-size:50px;margin:20px 0;line-height:1.2}
+    .gambar-benda{font-size:40px;margin:20px 0;line-height:1.5}
     .pilihan-angka{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:25px}
     .btn-angka{background:#E3F2FD;border:none;border-radius:12px;padding:12px 8px;font-size:20px;cursor:pointer;font-weight:bold;color:#1976D2}
     .btn-angka:active{transform:scale(.95);background:#BBDEFB}
@@ -44,7 +43,6 @@
 <body>
 
 <div class="wadah">
-  <!-- Halaman Menu Utama -->
   <div id="halaman-menu" class="halaman-latihan aktif">
     <h1 class="judul-utama">Mau Belajar Apa? 🎈</h1>
     <div class="grid-menu">
@@ -94,16 +92,13 @@
     </div>
   </div>
 
-  <!-- Halaman Hitung Jumlah -->
   <div id="halaman-hitung" class="halaman-latihan">
     <button class="tombol-kembali" onclick="kembaliKeMenu()">← Kembali</button>
     <div class="soal-kotak">
       <h2 id="teks-soal">Ada berapa apel?</h2>
       <div id="gambar-benda" class="gambar-benda">🍎 🍎 🍎</div>
       <p>Pilih jawabannya ya!</p>
-      <div class="pilihan-angka" id="pilihan-angka">
-        <!-- Pilihan muncul otomatis -->
-      </div>
+      <div class="pilihan-angka" id="pilihan-angka"></div>
       <div id="pesan" class="pesan"></div>
     </div>
   </div>
@@ -111,7 +106,6 @@
 </div>
 
 <script>
-// Simpan poin
 let poin = {
   hitung: parseInt(localStorage.getItem('poinHitung')||0),
   tambah: parseInt(localStorage.getItem('poinTambah')||0),
@@ -121,7 +115,6 @@ let poin = {
   bagi: parseInt(localStorage.getItem('poinBagi')||0)
 };
 
-// Tampilkan poin
 function tampilkanPoin(){
   document.getElementById('poin-hitung').textContent = poin.hitung;
   document.getElementById('poin-tambah').textContent = poin.tambah;
@@ -132,7 +125,6 @@ function tampilkanPoin(){
 }
 tampilkanPoin();
 
-// Data soal hitung
 const daftarSoal = [
   {teks:'Ada berapa apel?', benda:'🍎', jumlah:3},
   {teks:'Ada berapa jeruk?', benda:'🍊', jumlah:5},
@@ -148,7 +140,6 @@ const daftarSoal = [
 
 let soalSaatIni = null;
 
-// Buka menu
 function bukaMenu(nama){
   document.querySelectorAll('.halaman-latihan').forEach(h=>h.classList.remove('aktif'));
   
@@ -156,19 +147,17 @@ function bukaMenu(nama){
     document.getElementById('halaman-hitung').classList.add('aktif');
     buatSoalHitung();
   }else{
-    alert(nama==='kali'?'Perkalian':'Pembagian'===nama?'Pembagian':nama==='tambah'?'Penjumlahan':nama==='kurang'?'Pengurangan':'Kenal Angka' + ' sedang disiapkan ya 🚧');
+    alert(nama==='kali'?'Perkalian':nama==='bagi'?'Pembagian':nama==='tambah'?'Penjumlahan':nama==='kurang'?'Pengurangan':'Kenal Angka' + ' sedang disiapkan ya 🚧');
     document.getElementById('halaman-menu').classList.add('aktif');
   }
 }
 
-// Kembali ke menu
 function kembaliKeMenu(){
   document.querySelectorAll('.halaman-latihan').forEach(h=>h.classList.remove('aktif'));
   document.getElementById('halaman-menu').classList.add('aktif');
   tampilkanPoin();
 }
 
-// Buat soal baru
 function buatSoalHitung(){
   soalSaatIni = daftarSoal[Math.floor(Math.random()*daftarSoal.length)];
   
@@ -176,7 +165,6 @@ function buatSoalHitung(){
   document.getElementById('gambar-benda').innerHTML = Array(soalSaatIni.jumlah).fill(soalSaatIni.benda).join(' ');
   document.getElementById('pesan').textContent = '';
   
-  // Buat pilihan angka
   let pilihan = [soalSaatIni.jumlah];
   while(pilihan.length < 5){
     let acak = Math.floor(Math.random()*10)+1;
@@ -191,7 +179,6 @@ function buatSoalHitung(){
   document.getElementById('pilihan-angka').innerHTML = html;
 }
 
-// Cek jawaban
 function cekJawaban(angkaDipilih){
   const pesan = document.getElementById('pesan');
   if(angkaDipilih === soalSaatIni.jumlah){
