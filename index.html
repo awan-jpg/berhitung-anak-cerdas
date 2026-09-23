@@ -4,34 +4,78 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Belajar Berhitung — Cerdas Anak Indonesia</title>
-<link rel="icon" href="data:,">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Berhitung">
-<meta name="theme-color" content="#FFC107">
+  <link rel="icon" href="data:,">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Berhitung">
+  <meta name="theme-color" content="#FFC107">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="layar">
-    <h1>🌟 Belajar Berhitung 🌟</h1>
-    <p class="salam">Halo, Sayang! Ayo Belajar Bersama 😊</p>
 
-    <div class="kotak-soal">
-      <p id="soal-angka" class="soal"></p>
-      <p id="gambar-benda" class="gambar-benda"></p>
-      
-      <div class="jawaban">
-        <button class="tombol-jawaban" data-nomor="1">1</button>
-        <button class="tombol-jawaban" data-nomor="2">2</button>
-        <button class="tombol-jawaban" data-nomor="3">3</button>
-        <button class="tombol-jawaban" data-nomor="4">4</button>
-        <button class="tombol-jawaban" data-nomor="5">5</button>
-      </div>
+<div class="wadah">
+  <h1 class="judul-utama">Mau Belajar Apa? 🎈</h1>
+
+  <div class="grid-menu">
+
+    <!-- Item 1: Hitung Jumlah -->
+    <div class="kotak-menu" onclick="bukaMenu('hitung')">
+      <div class="ikon-besar">🔢</div>
+      <h2>Hitung Jumlah</h2>
+      <p>Hitung benda & pilih angka</p>
+      <div class="bintang-poin">⭐ <span id="poin-hitung">0</span></div>
     </div>
 
-    <p id="pesan" class="pesan"></p>
-    <button id="tombol-lanjut" class="tombol-lanjut">Lanjut ➡️</button>
-  </div>
+    <!-- Item 2: Penjumlahan -->
+    <div class="kotak-menu" onclick="bukaMenu('tambah')">
+      <div class="ikon-besar">➕</div>
+      <h2>Penjumlahan</h2>
+      <p>Jumlahkan angka sederhana</p>
+      <div class="bintang-poin">⭐ <span id="poin-tambah">0</span></div>
+    </div>
 
-  <script src="app.js"></script>
+    <!-- Item 3: Pengurangan -->
+    <div class="kotak-menu" onclick="bukaMenu('kurang')">
+      <div class="ikon-besar">➖</div>
+      <h2>Pengurangan</h2>
+      <p>Kurangkan angka sederhana</p>
+      <div class="bintang-poin">⭐ <span id="poin-kurang">0</span></div>
+    </div>
+
+    <!-- Item 4: Angka 1–10 -->
+    <div class="kotak-menu" onclick="bukaMenu('angka')">
+      <div class="ikon-besar">🔟</div>
+      <h2>Kenal Angka</h2>
+      <p>Mengenal angka 1 sampai 10</p>
+      <div class="bintang-poin">⭐ <span id="poin-angka">0</span></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// Muat poin yang tersimpan
+let poin = {
+  hitung: parseInt(localStorage.getItem('poinHitung') || 0),
+  tambah: parseInt(localStorage.getItem('poinTambah') || 0),
+  kurang: parseInt(localStorage.getItem('poinKurang') || 0),
+  angka: parseInt(localStorage.getItem('poinAngka') || 0)
+};
+
+// Tampilkan poin
+document.getElementById('poin-hitung').textContent = poin.hitung;
+document.getElementById('poin-tambah').textContent = poin.tambah;
+document.getElementById('poin-kurang').textContent = poin.kurang;
+document.getElementById('poin-angka').textContent = poin.angka;
+
+// Buka menu
+function bukaMenu(nama) {
+  if (nama === 'hitung') {
+    alert('Fitur "Hitung Jumlah" siap dibuka! 🎉\n(Bagian ini akan kita sambungkan pelan-pelan)');
+  } else {
+    alert('"' + nama + '" sedang disiapkan ya! 🚧\nKita tambahkan pelan-pelan!');
+  }
+}
+</script>
+
 </body>
 </html>
