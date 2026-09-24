@@ -54,6 +54,13 @@
   <div class="tombol-tengah">
     <button class="tombol-mulai" onclick="alert('Siap Belajar! 🎉')">MULAI BELAJAR</button>
   </div>
-
+<script>
+  const vid = document.querySelector('.video-penuh video');
+  vid.addEventListener('timeupdate', function() {
+    if (vid.currentTime > vid.duration - 0.2) {
+      vid.currentTime = 0;
+    }
+  });
+</script>
 </body>
 </html>
