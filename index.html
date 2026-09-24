@@ -56,10 +56,9 @@
   </div>
 <script>
   const vid = document.querySelector('.video-penuh video');
-  vid.addEventListener('timeupdate', function() {
-    if (vid.currentTime > vid.duration - 0.8) {
-      vid.currentTime = 0;
-    }
+  vid.addEventListener('ended', function() {
+    vid.currentTime = 0;
+    vid.play();
   });
 </script>
 </body>
