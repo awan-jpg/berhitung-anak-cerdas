@@ -1,100 +1,369 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Belajar Berhitung</title>
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
-    body{background:#FFF8E1;padding:20px;}
-    .wadah{max-width:400px;margin:0 auto;}
-    h1{text-align:center;color:#5D4037;margin:20px 0;}
-    .kotak{background:white;border-radius:16px;padding:30px;margin:15px 0;text-align:center;cursor:pointer;border-top:6px solid #FFC107;box-shadow:0 3px 8px rgba(0,0,0,0.1);}
-    .kotak:active{transform:scale(0.98);}
-    .halaman{display:none;}
-    .aktif{display:block;}
-    .kembali{background:#eee;border:none;padding:10px 20px;border-radius:8px;font-size:16px;cursor:pointer;margin-bottom:20px;}
-    .soal{background:white;border-radius:16px;padding:30px;text-align:center;}
-    .gambar{font-size:48px;margin:20px 0;}
-    .pilihan{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:20px;}
-    .btn{background:#E3F2FD;border:none;border-radius:8px;padding:12px;font-size:20px;font-weight:bold;cursor:pointer;color:#1976D2;}
-    .pesan{margin-top:20px;font-size:22px;font-weight:bold;}
-    .benar{color:green;}
-    .salah{color:red;}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cerdas Anak Hebat</title>
+<style>
+* {margin:0; padding:0; box-sizing:border-box; font-family:"Comic Sans MS", "Fredoka One", sans-serif;}
+html,body {width:100%; height:100%; overflow:hidden;}
+
+.splash {
+  position:absolute; inset:0;
+  background:linear-gradient(to bottom, #87CEFA 0%, #B0E2FF 50%, #D6F0FF 100%);
+  transition:opacity .8s ease; z-index:20;
+}
+.splash.hide {opacity:0; pointer-events:none;}
+
+/* Matahari */
+.sun {
+  position:absolute; top:15%; left:10%;
+  width:90px; height:90px;
+  background:#FFDD55; border-radius:50%;
+  box-shadow:0 0 50px 20px rgba(255,221,85,.35);
+}
+
+/* Awan */
+.cloud {position:absolute; background:#fff; border-radius:50%; opacity:.95;}
+.cloud-1 {width:240px; height:100px; top:45%; left:50%; transform:translateX(-50%);}
+.cloud-2 {width:140px; height:60px; top:35%; left:-20px;}
+.cloud-3 {width:120px; height:50px; top:30%; right:-10px;}
+
+/* Burung */
+.birds {
+  position:absolute; top:22%; right:12%;
+  font-size:14px; color:#555; letter-spacing:10px; opacity:.6;
+}
+
+/* Judul */
+.title {
+  position:absolute; top:15%; left:50%; transform:translateX(-50%);
+  text-align:center; line-height:1.5; white-space:nowrap;
+}
+.title span {
+  display:inline-block;
+  font-size:clamp(2rem,7vw,3.2rem);
+  font-weight:bold;
+  text-shadow:
+    2px 2px 0 #fff,
+    -1px -1px 0 #fff,
+    1px -1px 0 #fff,
+    -1px 1px 0 #fff;
+}
+.c1 {color:#FF3333;}
+.c2 {color:#FFCC00;}
+.c3 {color:#33BB33;}
+.c4 {color:#444;}
+
+.a1 {color:#9955DD;}
+.a2 {color:#3399FF;}
+.a3 {color:#33BB33;}
+.a4 {color:#FFCC00;}
+.h1 {color:#FF8822;}
+.h2 {color:#444;}
+.h3 {color:#9955DD;}
+.h4 {color:#33BB33;}
+
+/* Rumput */
+.grass {
+  position:absolute; bottom:0; left:0;
+  width:100%; height:32%;
+  background:linear-gradient(to top, #66CC66, #90EE90);
+}
+
+/* Hewan — Gaya Persis Seperti Layar */
+.animals {
+  position:absolute; bottom:10%; left:50%; transform:translateX(-50%);
+  display:flex; gap:clamp(12px,4vw,35px); z-index:5;
+}
+.animal {
+  width:clamp(75px,20vw,115px);
+  height:clamp(130px,34vw,190px);
+  display:flex; align-items:flex-end; justify-content:center;
+}
+.animal svg {width:100%; height:100%;}
+
+.cat    {animation:bounce 3.5s ease-in-out infinite;}
+.rabbit {animation:hop    2.5s ease-in-out infinite;}
+.lion   {animation:sway   3s   ease-in-out infinite;}
+.bear   {animation:rock   4s   ease-in-out infinite;}
+
+@keyframes bounce {
+  0%,100% {transform:translateY(0);}
+  50%     {transform:translateY(-4px);}
+}
+@keyframes hop {
+  0%,100% {transform:translateY(0);}
+  50%     {transform:translateY(-8px);}
+}
+@keyframes sway {
+  0%,100% {transform:rotate(-2deg);}
+  50%     {transform:rotate(2deg);}
+}
+@keyframes rock {
+  0%,100% {transform:rotate(1.5deg);}
+  50%     {transform:rotate(-1.5deg);}
+}
+
+/* Loading */
+.loading {
+  position:absolute; bottom:4%; left:50%; transform:translateX(-50%);
+  text-align:center; width:78%; max-width:340px; z-index:6;
+}
+.load-text {font-size:1.05rem; color:#555; margin-bottom:10px;}
+.load-bar {
+  width:100%; height:12px; background:#E8E8E8; border-radius:10px; overflow:hidden;
+}
+.load-fill {
+  height:100%; width:0%;
+  background:linear-gradient(90deg, #FFD54F, #FF9800);
+  border-radius:10px; transition:width .25s ease;
+}
+
+/* Pilih Bahasa & Menu */
+.lang {
+  position:absolute; inset:0; background:rgba(30,60,90,.95);
+  display:flex; align-items:center; justify-content:center; padding:20px;
+  opacity:0; pointer-events:none; transition:opacity .8s ease; z-index:15;
+}
+.lang.active {opacity:1; pointer-events:auto;}
+.lang-box {
+  background:#fff; padding:30px 25px; border-radius:24px;
+  border:5px solid transparent;
+  border-image:linear-gradient(90deg, #FFD54F, #64B5F6, #81C784, #FF8A65, #FFD54F) 1;
+  max-width:360px; width:100%; text-align:center;
+}
+.lang-title {font-size:1.6rem; color:#E53935; font-weight:bold; margin-bottom:8px;}
+.lang-desc {font-size:1.05rem; color:#43A047; margin-bottom:24px;}
+.lang-btns {display:flex; gap:12px; margin-bottom:20px; flex-wrap:wrap; justify-content:center;}
+.lang-btn {
+  flex:1; min-width:120px; padding:16px 10px;
+  background:#42A5F5; border:3px solid #1976D2; border-radius:14px;
+  color:#fff; font-size:1.1rem; font-weight:bold; cursor:pointer;
+  position:relative;
+}
+.lang-btn.sel {box-shadow:0 0 0 3px #4CAF50;}
+.lang-btn.sel::after {
+  content:"✓"; position:absolute; top:6px; right:8px;
+  background:#4CAF50; color:#fff; width:22px; height:22px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-size:.85rem;
+}
+.next {
+  width:100%; padding:14px; background:#66BB6A; border:none; border-radius:12px;
+  color:#fff; font-size:1.1rem; font-weight:bold; cursor:pointer;
+}
+
+.menu {
+  position:absolute; inset:0;
+  background:linear-gradient(to bottom, #87CEFA, #90EE90);
+  opacity:0; pointer-events:none; transition:opacity .8s ease; z-index:10;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px;
+}
+.menu.active {opacity:1; pointer-events:auto;}
+.btn-main {
+  padding:16px 50px; background:linear-gradient(to bottom, #CE93D8, #AB47BC);
+  border:none; border-radius:50px; color:#fff; font-size:1.7rem; font-weight:bold;
+  margin:10px; cursor:pointer; box-shadow:0 5px 0 #7B1FA2;
+}
+.btn-mode {
+  padding:12px 32px; background:linear-gradient(to bottom, #90CAF9, #42A5F5);
+  border:none; border-radius:50px; color:#fff; font-size:1.1rem; font-weight:bold;
+  margin:6px; cursor:pointer; box-shadow:0 4px 0 #1565C0;
+}
+.btn-group {position:absolute; bottom:20px; right:20px; display:flex; gap:10px;}
+.btn-small {
+  padding:8px 12px; background:#FF9800; border:none; border-radius:10px;
+  color:#fff; font-weight:bold; cursor:pointer;
+}
+</style>
 </head>
 <body>
-  <div class="wadah">
-    <div id="menu" class="halaman aktif">
-      <h1>Mau Belajar Apa? 🎈</h1>
-      <div class="kotak" onclick="bukaHitung()">
-        <div style="font-size:40px;">🔢</div>
-        <h2>Hitung Jumlah</h2>
-        <p>Hitung benda & pilih angka</p>
-        <p>⭐ <span id="bintang">0</span></p>
-      </div>
+
+<div class="splash" id="splash">
+  <div class="sun"></div>
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
+  <div class="birds">~ ~ ~</div>
+
+  <div class="title">
+    <div>
+      <span class="c1">C</span><span class="c2">E</span><span class="c3">R</span><span class="c4">DAS</span>
     </div>
-    <div id="halamanHitung" class="halaman">
-      <button class="kembali" onclick="kembali()">← Kembali</button>
-      <div class="soal">
-        <h2 id="pertanyaan">Ada berapa apel?</h2>
-        <div id="gambar" class="gambar">🍎🍎🍎</div>
-        <p>Pilih jawaban:</p>
-        <div id="pilihan" class="pilihan"></div>
-        <div id="pesan" class="pesan"></div>
-      </div>
+    <div>
+      <span class="a1">A</span><span class="a2">N</span><span class="a3">A</span><span class="a4">K</span>
+      &nbsp;
+      <span class="h1">H</span><span class="a3">E</span><span class="h2">B</span><span class="h3">A</span><span class="h4">T</span>
     </div>
   </div>
-  <script>
-    let bintang = parseInt(localStorage.getItem('bintangSimpan')) || 0;
-    document.getElementById('bintang').textContent = bintang;
-    const daftar = [
-      {tanya:'Ada berapa apel?', ikon:'🍎', jumlah:3},
-      {tanya:'Ada berapa jeruk?', ikon:'🍊', jumlah:5},
-      {tanya:'Ada berapa pisang?', ikon:'🍌', jumlah:2},
-      {tanya:'Ada berapa bintang?', ikon:'⭐', jumlah:4},
-      {tanya:'Ada berapa balon?', ikon:'🎈', jumlah:1}
-    ];
-    let soalSekarang = null;
-    function bukaHitung(){
-      document.getElementById('menu').classList.remove('aktif');
-      document.getElementById('halamanHitung').classList.add('aktif');
-      buatSoal();
-    }
-    function kembali(){
-      document.getElementById('halamanHitung').classList.remove('aktif');
-      document.getElementById('menu').classList.add('aktif');
-      document.getElementById('bintang').textContent = bintang;
-    }
-    function buatSoal(){
-      soalSekarang = daftar[Math.floor(Math.random() * daftar.length)];
-      document.getElementById('pertanyaan').textContent = soalSekarang.tanya;
-      document.getElementById('gambar').innerHTML = Array(soalSekarang.jumlah).fill(soalSekarang.ikon).join(' ');
-      document.getElementById('pesan').textContent = '';
-      let pilihan = [soalSekarang.jumlah];
-      while(pilihan.length < 5){
-        let acak = Math.floor(Math.random()*5)+1;
-        if(!pilihan.includes(acak)) pilihan.push(acak);
-      }
-      pilihan.sort(() => Math.random() - 0.5);
-      let tombol = '';
-      pilihan.forEach(angka => {
-        tombol += <button class="btn" onclick="cek(${angka})">${angka}</button>;
-      });
-      document.getElementById('pilihan').innerHTML = tombol;
-    }
-    function cek(angkaDipilih){
-      if(angkaDipilih === soalSekarang.jumlah){
-        document.getElementById('pesan').textContent = 'HEBAT! 🎉 Benar!';
-        document.getElementById('pesan').className = 'pesan benar';
-        bintang++;
-        localStorage.setItem('bintangSimpan', bintang);
-        setTimeout(buatSoal, 1500);
-      }else{
-        document.getElementById('pesan').textContent = 'Coba lagi ya 💪';
-        document.getElementById('pesan').className = 'pesan salah';
-      }
-    }
-  </script>
+
+  <div class="grass"></div>
+
+  <div class="animals">
+    <!-- Kucing — Persis Gaya di Layar: mata tertutup senyum -->
+    <div class="animal cat">
+      <svg viewBox="0 0 100 150" fill="none">
+        <!-- Kaki -->
+        <rect x="18" y="120" width="10" height="20" fill="#E8E8E8" stroke="#333" stroke-width="2.5" rx="2"/>
+        <rect x="72" y="120" width="10" height="20" fill="#E8E8E8" stroke="#333" stroke-width="2.5" rx="2"/>
+        <!-- Badan -->
+        <ellipse cx="50" cy="100" rx="35" ry="30" fill="#E8E8E8" stroke="#333" stroke-width="2.5"/>
+        <ellipse cx="50" cy="105" rx="20" ry="18" fill="#F5F5F5"/>
+        <!-- Kepala -->
+        <circle cx="50" cy="60" r="30" fill="#E8E8E8" stroke="#333" stroke-width="2.5"/>
+        <!-- Telinga -->
+        <path d="M25 35 L35 50 L28 45 Z" fill="#E8E8E8" stroke="#333" stroke-width="2"/>
+        <path d="M75 35 L65 50 L72 45 Z" fill="#E8E8E8" stroke="#333" stroke-width="2"/>
+        <!-- Mata tertutup -->
+        <path d="M35 55 Q42 50 48 55" stroke="#333" stroke-width="2.5" fill="none"/>
+        <path d="M52 55 Q58 50 65 55" stroke="#333" stroke-width="2.5" fill="none"/>
+        <!-- Hidung & mulut -->
+        <ellipse cx="50" cy="68" rx="4" ry="3" fill="#FF99AA"/>
+        <path d="M42 75 Q50 82 58 75" stroke="#333" stroke-width="2.5" fill="none"/>
+        <!-- Pipi merah muda -->
+        <ellipse cx="28" cy="65" rx="6" ry="4" fill="#FFCCCC" opacity=".5"/>
+        <ellipse cx="72" cy="65" rx="6" ry="4" fill="#FFCCCC" opacity=".5"/>
+        <!-- Tangan kecil -->
+        <path d="M20 90 Q10 85 15 78" stroke="#333" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M80 90 Q90 85 85 78" stroke="#333" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <!-- Ekor melengkung -->
+        <path d="M12 100 Q0 85 8 72" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <!-- Kelinci Putih -->
+    <div class="animal rabbit">
+      <svg viewBox="0 0 100 150" fill="none">
+        <rect x="32" y="120" width="10" height="22" fill="#FFFFFF" stroke="#333" stroke-width="2.5" rx="2"/>
+        <rect x="58" y="120" width="10" height="22" fill="#FFFFFF" stroke="#333" stroke-width="2.5" rx="2"/>
+        <ellipse cx="50" cy="100" rx="30" ry="32" fill="#FFFFFF" stroke="#333" stroke-width="2.5"/>
+        <circle cx="50" cy="62" r="28" fill="#FFFFFF" stroke="#333" stroke-width="2.5"/>
+        <ellipse cx="38" cy="30" rx="9" ry="28" fill="#FFFFFF" stroke="#333" stroke-width="2.5"/>
+        <ellipse cx="38" cy="36" rx="5" ry="16" fill="#FFC8D8"/>
+        <ellipse cx="62" cy="30" rx="9" ry="28" fill="#FFFFFF" stroke="#333" stroke-width="2.5"/>
+        <ellipse cx="62" cy="36" rx="5" ry="16" fill="#FFC8D8"/>
+        <circle cx="40" cy="58" r="5" fill="#222"/>
+        <circle cx="60" cy="58" r="5" fill="#222"/>
+        <ellipse cx="50" cy="72" rx="4" ry="3" fill="#FF99AA"/>
+        <path d="M42 80 Q50 86 58 80" stroke="#333" stroke-width="2.5" fill="none"/>
+        <ellipse cx="32" cy="68" rx="6" ry="4" fill="#FFCCCC" opacity=".5"/>
+        <ellipse cx="68" cy="68" rx="6" ry="4" fill="#FFCCCC" opacity=".5"/>
+      </svg>
+    </div>
+
+    <!-- Singa — Persis Gaya di Layar: bulat, pipi merah, tangan kecil -->
+    <div class="animal lion">
+      <svg viewBox="0 0 100 150" fill="none">
+        <rect x="32" y="120" width="10" height="20" fill="#FFCC33" stroke="#333" stroke-width="2.5" rx="2"/>
+        <rect x="58" y="120" width="10" height="20" fill="#FFCC33" stroke="#333" stroke-width="2.5" rx="2"/>
+        <ellipse cx="50" cy="100" rx="32" ry="30" fill="#FFCC33" stroke="#333" stroke-width="2.5"/>
+        <circle cx="50" cy="60" r="30" fill="#FFCC33" stroke="#333" stroke-width="2.5"/>
+        <!-- Jambul bulat -->
+        <circle cx="30" cy="45" r="10" fill="#FFB300" stroke="#333" stroke-width="2"/>
+        <circle cx="70" cy="45" r="10" fill="#FFB300" stroke="#333" stroke-width="2"/>
+        <circle cx="28" cy="70" r="9" fill="#FFB300" stroke="#333" stroke-width="2"/>
+        <circle cx="72" cy="70" r="9" fill="#FFB300" stroke="#333" stroke-width="2"/>
+        <!-- Mata -->
+        <circle cx="40" cy="55" r="5" fill="#222"/>
+        <circle cx="60" cy="55" r="5" fill="#222"/>
+        <!-- Hidung & mulut -->
+        <ellipse cx="50" cy="68" rx="6" ry="4" fill="#FFE066" stroke="#333" stroke-width="1.5"/>
+        <path d="M44 76 Q50 82 56 76" stroke="#333" stroke-width="2.5" fill="none"/>
+        <!-- Pipi merah -->
+        <ellipse cx="28" cy="65" rx="7" ry="5" fill="#FF9966" opacity=".5"/>
+        <ellipse cx="72" cy="65" rx="7" ry="5" fill="#FF9966" opacity=".5"/>
+        <!-- Tangan kecil melambai -->
+        <path d="M78 85 Q90 75 88 65" stroke="#333" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <circle cx="88" cy="63" r="4" fill="#FFCC33" stroke="#333" stroke-width="1.5"/>
+      </svg>
+    </div>
+
+    <!-- Beruang Coklat -->
+    <div class="animal bear">
+      <svg viewBox="0 0 100 150" fill="none">
+        <rect x="32" y="120" width="10" height="22" fill="#8B5A2B" stroke="#333" stroke-width="2.5" rx="2"/>
+        <rect x="58" y="120" width="10" height="22" fill="#8B5A2B" stroke="#333" stroke-width="2.5" rx="2"/>
+        <ellipse cx="50" cy="100" rx="33" ry="31" fill="#8B5A2B" stroke="#333" stroke-width="2.5"/>
+        <ellipse cx="50" cy="95" rx="18" ry="20" fill="#DEB887"/>
+        <circle cx="28" cy="48" r="12" fill="#8B5A2B" stroke="#333" stroke-width="2.5"/>
+        <circle cx="72" cy="48" r="12" fill="#8B5A2B" stroke="#333" stroke-width="2.5"/>
+        <circle cx="50" cy="62" r="28" fill="#A06B45" stroke="#333" stroke-width="2.5"/>
+        <circle cx="40" cy="58" r="5" fill="#222"/>
+        <circle cx="60" cy="58" r="5" fill="#222"/>
+        <ellipse cx="50" cy="72" rx="7" ry="5" fill="#DEB887" stroke="#333" stroke-width="1.5"/>
+        <ellipse cx="50" cy="70" rx="3.5" ry="2.5" fill="#222"/>
+        <path d="M42 80 Q50 86 58 80" stroke="#333" stroke-width="2.5" fill="none"/>
+        <ellipse cx="32" cy="68" rx="6" ry="4" fill="#DEB887" opacity=".5"/>
+        <ellipse cx="68" cy="68" rx="6" ry="4" fill="#DEB887" opacity=".5"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="loading">
+    <p class="load-text">Memuat...</p>
+    <div class="load-bar">
+      <div class="load-fill" id="loadFill"></div>
+    </div>
+  </div>
+</div>
+
+<div class="lang" id="langPage">
+  <div class="lang-box">
+    <p class="lang-title">PILIH BAHASA</p>
+    <p class="lang-desc" id="langDesc">Pilih Bahasa</p>
+    <div class="lang-btns">
+      <button class="lang-btn sel" id="btnEn">English</button>
+      <button class="lang-btn" id="btnId">Bahasa Indonesia</button>
+    </div>
+    <button class="next" id="btnNext">Lanjut ke English</button>
+  </div>
+</div>
+
+<div class="menu" id="menuPage">
+  <button class="btn-main">▶️ MAIN</button>
+  <button class="btn-mode">🎨 PILIH MODE</button>
+  <div class="btn-group">
+    <button class="btn-small">Bahasa</button>
+    <button class="btn-small">🎁 Hadiah</button>
+    <button class="btn-small">⚙️</button>
+  </div>
+</div>
+
+<script>
+let progress = 0;
+const fill = document.getElementById('loadFill');
+const loadInterval = setInterval(() => {
+  progress += 2;
+  fill.style.width = progress + '%';
+  if (progress >= 100) {
+    clearInterval(loadInterval);
+    setTimeout(() => {
+      document.getElementById('splash').classList.add('hide');
+      document.getElementById('langPage').classList.add('active');
+    }, 600);
+  }
+}, 50);
+
+const btnEn = document.getElementById('btnEn');
+const btnId = document.getElementById('btnId');
+const btnNext = document.getElementById('btnNext');
+const langDesc = document.getElementById('langDesc');
+
+btnEn.onclick = () => {
+  btnEn.classList.add('sel'); btnId.classList.remove('sel');
+  btnNext.textContent = 'Continue in English';
+  langDesc.textContent = 'Choose Language';
+};
+btnId.onclick = () => {
+  btnId.classList.add('sel'); btnEn.classList.remove('sel');
+  btnNext.textContent = 'Lanjut ke Bahasa Indonesia';
+  langDesc.textContent = 'Pilih Bahasa';
+};
+btnNext.onclick = () => {
+  document.getElementById('langPage').classList.remove('active');
+  document.getElementById('menuPage').classList.add('active');
+};
+</script>
+
 </body>
 </html>
