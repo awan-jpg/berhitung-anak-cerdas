@@ -1,1 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Belajar Angka - Cerdas Anak Indonesia</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(180deg, #87CEEB 0%, #E0F7FF 100%);
+      font-family: sans-serif;
+    }
+    .balon {
+      position: absolute;
+      width: 110px;
+      height: 150px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      font-weight: bold;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+      bottom: -160px;
+      animation: naikTerus 6s linear forwards;
+      transition: transform 0.2s ease;
+      user-select: none;
+    }
+    .balon::after {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 50px;
+      background: #555;
+    }
+    @keyframes naikTerus {
+      from { transform: translateY(0); }
+      to { transform: translateY(-120vh); }
+    }
+    .meledak {
+      animation: ledak 0.4s ease-out forwards !important;
+    }
+    @keyframes ledak {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.6); opacity: 0.4; }
+      100% { transform: scale(0); opacity: 0; }
+    }
+    .puji {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 60px;
+      color: #FF9800;
+      font-weight: bold;
+      text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 100;
+      transition: opacity 0.3s;
+    }
+    .selesai-teks {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 42px;
+      color: #2E7D32;
+      font-weight: bold;
+      text-align: center;
+      background: white;
+      padding: 40px 60px;
+      border-radius: 20px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      z-index: 200;
+      display: none;
+    }
+    .kembali {
+      margin-top: 25px;
+      padding: 15px 40px;
+      font-size: 22px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="puji" id="puji">✨ Bagus! ✨</div>
+  <div class="selesai-teks" id="selesaiTeks">
+    🎉 Selesai! 🎉<br>
+    Kamu hebat sekali!
+    <br>
+    <button class="kembali" onclick="kembaliAwal()">Kembali</button>
+  </div>
 
+  <script>
+    const daftarAngka = [
+      { angka: '1', nama: 'Satu' },
+      { angka: '2', nama: 'Dua' },
+      { angka: '3', nama: 'Tiga' },
+      { angka: '4', nama: 'Empat' },
+      { angka: '5', nama: 'Lima' },
+      { angka: '6', nama: 'Enam' },
+      { angka: '7', nama: 'Tujuh' },
+      { angka: '8', nama: 'Delapan' },
+      { angka: '9', nama: 'Sembilan' },
+      { angka: '10', nama: 'Sepuluh' }
+    ];
+
+    const warnaBalon = ['#FF5252','#FF9800','#FFEB3B','#4CAF50','#2196F3','#3F51B5','#9C27B0','#E91E63','#00BCD4','#795548','#FF4081','#FFC107'];
+
+    let urutan = 0;
+
+    function mulaiAngka() {
+      document.querySelectorAll('.balon').forEach(b => b.remove());
+      if (urutan >= daftarAngka.length) {
+        document.getElementById('selesaiTeks').style.display = 'block';
+        return;
+      }
+      const data = daftarAngka[urutan];
+      const jumlahBalon = 3 + Math.floor(Math.random() * 2);
+      
+      for (let i = 0; i < jumlahBalon; i++) {
+        let b = document.createElement('div');
+        b.className = 'balon';
+        b.textContent = data.angka;
+        b.style.backgroundColor = warnaBalon[Math.floor(Math.random() * warnaBalon.length)];
+        b.style.left = ${10 + Math.random() * 70}%;
+        b.style.animationDelay = ${Math.random() * 2.5}s;
+        b.onclick = () => tekanBalon(b, data);
+        document.body.appendChild(b);
+      }
+    }
+
+    function tekanBalon(elemen, data) {
+      elemen.classList.add('meledak');
+      ucapkan(data.nama);
+      
+      const puji = document.getElementById('puji');
+      puji.style.opacity = '1';
+      setTimeout(() => puji.style.opacity = '0', 1000);
+      
+      setTimeout(() => {
+        urutan++;
+        mulaiAngka();
+      }, 1200);
+    }
+
+    function ucapkan(teks) {
+      if ('speechSynthesis' in window) {
+        let ucap = new SpeechSynthesisUtterance(teks);
+        ucap.lang = 'id-ID';
+        ucap.rate = 0.8;
+        speechSynthesis.speak(ucap);
+      }
+    }
+
+    function kembaliAwal() {
+      window.location.href = 'index.html';
+    }
+
+    mulaiAngka();
+  </script>
+</body>
+</html>
